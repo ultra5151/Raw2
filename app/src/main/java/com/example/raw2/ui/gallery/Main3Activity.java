@@ -1,15 +1,19 @@
 package com.example.raw2.ui.gallery;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.raw2.R;
 import com.example.raw2.ui.home.Main2Activity;
+import com.example.raw2.ui.slideshow.Main17Activity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -19,6 +23,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import android.os.Environment;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
@@ -28,15 +33,16 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Main3Activity extends AppCompatActivity {
 
-    WebView webView;
-    ProgressBar progressBar;
-    ProgressDialog progressDialog;
-
+      ListView branch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,82 +50,52 @@ public class Main3Activity extends AppCompatActivity {
         Window window = getWindow();
         window.addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        webView = (WebView)findViewById(R.id.webView);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Loading_Please_Wait");
+        branch = (ListView)findViewById(R.id.branch);
 
-        webView.setWebViewClient(new WebViewClient());
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl(" https://drive.google.com/open?id=1lGTDZw-WoiC1kMcyZFsLPYwocDCSLNP4");
+        String [] Branch = {"CSE","IT","Electrical","Electronic","Mechanical","Civil" };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,Branch){
 
-        webView.setWebChromeClient(new WebChromeClient(){
-
+            @NonNull
             @Override
-            public void onProgressChanged(WebView view, int newProgress) {
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-                progressBar.setVisibility(View.VISIBLE);
-                progressBar.setProgress(newProgress);
-                setTitle("Loading....");
-                progressDialog.show();
-                if(newProgress==100){
-                    progressBar.setVisibility(View.GONE);
-                    setTitle(view.getTitle());
-                    progressDialog.dismiss();
+                View view = super.getView(position, convertView, parent);
+                TextView myText = (TextView)findViewById(android.R.id.text1);
+
+                return view;
+            }
+        };
+        branch.setAdapter(adapter);
+
+        branch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0){
+
+                    Intent intent = new Intent(getApplicationContext(), Main19Activity.class);
+                    String item =  branch.getItemAtPosition(position).toString();
+                    intent.putExtra("Branch",item);
+                    startActivity(intent);
+
                 }
 
-                super.onProgressChanged(view, newProgress);
-            }
-        });
+                if (position==1){
 
+                    Intent intent = new Intent(getApplicationContext(), Main19Activity.class);
+                    String item =  branch.getItemAtPosition(position).toString();
+                    intent.putExtra("Branch",item);
+                    startActivity(intent);
 
+                }
+                if (position==2){
 
+                    Intent intent = new Intent(getApplicationContext(), Main19Activity.class);
+                    String item =  branch.getItemAtPosition(position).toString();
+                    intent.putExtra("Branch",item);
+                    startActivity(intent);
 
-
-        webView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(final String url, final String userAgent, final String contentDisposition, final String mimetype, long contentLength) {
-
-                Dexter.withActivity(Main3Activity.this)
-                        .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .withListener(new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted(PermissionGrantedResponse response) {
-
-                                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-                                request.setMimeType(mimetype);
-                                String cookies = CookieManager.getInstance().getCookie(url);
-                                request.addRequestHeader("cookie",cookies);
-                                request.addRequestHeader("User-Agent",userAgent);
-                                request.setDescription("Downloading.....");
-                                request.setTitle(URLUtil.guessFileName(url,contentDisposition,mimetype));
-                                request.allowScanningByMediaScanner();
-                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-
-                                request.setDestinationInExternalPublicDir(
-                                        Environment.DIRECTORY_DOWNLOADS,URLUtil.guessFileName(
-                                                url,contentDisposition,mimetype));
-
-                                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                                downloadManager.enqueue(request);
-                                Toast.makeText(Main3Activity.this, "Downloading file....", Toast.LENGTH_SHORT).show();
-
-
-                            }
-
-                            @Override
-                            public void onPermissionDenied(PermissionDeniedResponse response) {
-
-                            }
-
-                            @Override
-                            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                token.continuePermissionRequest();
-                            }
-                        }).check();
-
-
+                }
             }
         });
 

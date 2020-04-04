@@ -33,7 +33,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 public class Main2Activity extends AppCompatActivity {
          WebView webView;
          ProgressBar progressBar;
-         ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,13 @@ public class Main2Activity extends AppCompatActivity {
 
         webView = (WebView)findViewById(R.id.webView);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Loading_Please_Wait");
+
 
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl(" https://drive.google.com/open?id=1lGTDZw-WoiC1kMcyZFsLPYwocDCSLNP4");
+        webView.loadUrl(" https://drive.google.com/open?id=1E7FqfLvJXqrw823vq_2O67CYMVb2ogG0");
+        
 
 
 
@@ -65,11 +65,11 @@ public class Main2Activity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 progressBar.setProgress(newProgress);
                 setTitle("Loading....");
-                progressDialog.show();
+
                 if(newProgress==100){
                     progressBar.setVisibility(View.GONE);
                     setTitle(view.getTitle());
-                    progressDialog.dismiss();
+
                 }
 
                 super.onProgressChanged(view, newProgress);

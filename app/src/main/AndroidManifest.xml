@@ -7,12 +7,31 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:hardwareAccelerated="false"
+        android:icon="@drawable/batumain"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.gallery.Main7Activity"></activity>
+        <activity android:name=".ui.tools.Main23Activity"></activity>
+        <activity android:name=".ui.tools.Main22Activity" />
+        <activity android:name=".ui.tools.Main21Activity" />
+        <activity android:name=".ui.slideshow.Main20Activity" />
+        <activity android:name=".ui.gallery.Main19Activity" />
+        <activity android:name=".ui.slideshow.Main18Activity" />
+        <activity android:name=".ui.slideshow.Main17Activity" />
+        <activity android:name=".ui.slideshow.IT" />
+        <activity android:name=".ui.slideshow.Main16Activity" />
+        <activity android:name=".ui.slideshow.Main15Activity" />
+        <activity android:name=".ui.slideshow.Main14Activity" />
+        <activity android:name=".ui.slideshow.Main13Activity" />
+        <activity android:name=".ui.slideshow.Main12Activity" />
+        <activity android:name=".ui.slideshow.Main11Activity" />
+        <activity android:name=".ui.slideshow.Main10Activity" />
+        <activity android:name=".ui.slideshow.Main9Activity" />
+        <activity android:name=".ui.slideshow.Main8Activity" />
+        <activity android:name=".ui.gallery.Main7Activity" />
         <activity android:name=".ui.gallery.Main6Activity" />
         <activity android:name=".ui.home.Main5Activity" />
         <activity android:name=".ui.home.Main4Activity" />

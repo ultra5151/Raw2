@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,11 +21,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.raw2.R;
+import com.example.raw2.ui.tools.CustomListview;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    Button btn3,btn4;
+
+    ListView lst;
+
+
+    String [] fruitname = { "Syllabus","Books","Question Paper"};
+    Integer[] imgid = {R.drawable.sysy,R.drawable.book57,R.drawable.brain57};
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,39 +41,38 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final Button btn1 = root.findViewById(R.id.btn1);
-        btn3 = root.findViewById(R.id.btn3);
-        btn4 = root.findViewById(R.id.btn4);
 
 
+        lst = (ListView)root.findViewById(R.id.listview);
+        CustomListview customListview = new CustomListview(getActivity(),fruitname,imgid);
+        lst.setAdapter(customListview);
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+
+        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                if (position==0){
 
+                    startActivity(new Intent(getContext(),Main2Activity.class));
+                }
 
-                startActivity(new Intent(getActivity(),Main2Activity.class));
+               else if (position==1){
 
+                    startActivity(new Intent(getContext(),Main4Activity.class));
+                }
+                else if (position==2){
+
+                    startActivity(new Intent(getContext(),Main5Activity.class));
+                }
 
 
 
             }
         });
 
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Main4Activity.class));
-            }
-        });
 
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Main5Activity.class));
-            }
-        });
+
 
         return root;
 

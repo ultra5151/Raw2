@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,45 +17,54 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.raw2.R;
+import com.example.raw2.ui.home.Main2Activity;
+import com.example.raw2.ui.home.Main4Activity;
+import com.example.raw2.ui.home.Main5Activity;
+import com.example.raw2.ui.tools.CustomListview;
 
 public class GalleryFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
-    Button btn2,btn5,btn6 ;
+
+    ListView lst;
+
+
+    String [] fruitname = { "Syllabus","Books","Question Paper"};
+    Integer[] imgid = {R.drawable.sysy,R.drawable.book57,R.drawable.brain57};
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        btn2 = (Button)root.findViewById(R.id.btn2);
-        btn5 = (Button)root.findViewById(R.id.btn5);
-        btn6 = (Button)root.findViewById(R.id.btn6);
+        lst = (ListView)root.findViewById(R.id.listview);
+        CustomListview customListview = new CustomListview(getActivity(),fruitname,imgid);
+        lst.setAdapter(customListview);
 
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Main3Activity.class));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position==0){
+
+                    startActivity(new Intent(getContext(), Main3Activity.class));
+                }
+
+                else if (position==1){
+
+                    startActivity(new Intent(getContext(), Main6Activity.class));
+                }
+                else if (position==2){
+
+                    startActivity(new Intent(getContext(), Main7Activity.class));
+                }
+
+
 
             }
         });
-
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Main6Activity.class));
-
-            }
-        });
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Main7Activity.class));
-
-            }
-        });
-
         return root;
     }
 }
